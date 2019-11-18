@@ -48,11 +48,11 @@ path='\\\\apw-grskfs01\\GVAR2\\Global Risk Management\\MHSC IBR CNY Stressed Per
 
 file = 'MarketArchive.2018-04-16.ada'
 
-df_input=pd.read_table(os.path.join(path,file), skiprows=3)
-df_input=df_input.set_index('DATE')
-df_input.index=from_excelordinal(df_input.index)
+df_input = pd.read_table(os.path.join(path,file), skiprows=3)
+df_input = df_input.set_index('DATE')
+df_input.index = from_excelordinal(df_input.index)
 
-allcols=[]
+allcols = []
 
 
 for item in items:
@@ -60,14 +60,18 @@ for item in items:
     #cols = [col for col in df_input.columns if (item.upper() in col.upper() and ',5Y' in col.upper()) ]
     allcols.append(cols)
 
-allcols=reduce(lambda x,y: x+y, allcols)
+allcols = reduce(lambda x,y: x+y, allcols)
 
 
-df_filtered=df_input.filter(items=allcols, axis=1)
+df_filtered = df_input.filter(items=allcols, axis=1)
+
+
+
 
 
 # compute 1st differences of dataframe data
 df_diff=multiplier*df_filtered.diff(periods=1)
+
 
 
 corr=df_diff.corr()
